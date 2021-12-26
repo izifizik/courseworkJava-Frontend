@@ -30,6 +30,11 @@
             <artifactId>lombok-maven-plugin</artifactId>
             <version>1.18.20.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20211205</version>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

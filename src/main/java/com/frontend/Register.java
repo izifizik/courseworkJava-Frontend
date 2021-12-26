@@ -7,9 +7,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import static com.frontend.Main.postRequest;
+import static com.frontend.Main.postUserRequest;
 
 
 public class Register implements ActionListener {
@@ -30,6 +29,7 @@ public class Register implements ActionListener {
     JLabel passwordConfirmLabel = new JLabel("Confirm password:");
 
     Register() {
+        frame.setTitle("Register");
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setSize(400, 350);
         frame.setVisible(true);
@@ -79,7 +79,7 @@ public class Register implements ActionListener {
 
                 //HTTP
                 try {
-                    response = postRequest("http://localhost:8080/api/v1/user/register", usernameField.getText(), String.valueOf(passwordField.getPassword()));
+                    response = postUserRequest("http://localhost:8080/api/v1/user/register", usernameField.getText(), String.valueOf(passwordField.getPassword()));
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                     JOptionPane.showMessageDialog(frame, "Server error, try later", "Sever Error", JOptionPane.ERROR_MESSAGE);
@@ -96,6 +96,7 @@ public class Register implements ActionListener {
                             JOptionPane.showMessageDialog(frame, "Username is busy", "Sever Warning", JOptionPane.WARNING_MESSAGE);
                             return;
                         default:
+                            JOptionPane.showMessageDialog(frame, "New error. Check logs.", "Sever Warning", JOptionPane.WARNING_MESSAGE);
                             System.out.println(error[0]);
                             return;
                     }

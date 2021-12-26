@@ -4,15 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.frontend.Main.postRequest;
+import static com.frontend.Main.postUserRequest;
 
-public class Auth extends WindowAdapter implements ActionListener {
+public class Auth implements ActionListener {
 
     JFrame frame = new JFrame();
 
@@ -29,6 +27,7 @@ public class Auth extends WindowAdapter implements ActionListener {
     JLabel passwordLable = new JLabel("Password:");
 
     Auth() {
+        frame.setTitle("Auth");
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setSize(400, 350);
         frame.setVisible(true);
@@ -59,7 +58,6 @@ public class Auth extends WindowAdapter implements ActionListener {
         frame.add(signInButton);
         frame.add(signUpButton);
         frame.add(emptyLable);
-
     }
 
 
@@ -72,16 +70,19 @@ public class Auth extends WindowAdapter implements ActionListener {
 
         if (e.getSource() == signInButton) {
             Map<Object, Object> response = new HashMap<>();
-            System.out.println(String.valueOf(passwordField.getPassword()));
             try {
-                response = postRequest("http://localhost:8080/api/v1/user/auth", usernameField.getText(), String.valueOf(passwordField.getPassword()));
+                response = postUserRequest("http://localhost:8080/api/v1/user/auth", usernameField.getText(), String.valueOf(passwordField.getPassword()));
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
                 JOptionPane.showMessageDialog(frame, "Server error, try later", "Sever Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             if (response.get("message").toString().equals("Incorrect password")) {
-                JOptionPane.showMessageDialog(frame, response.get("message").toString(), "Sever Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(frame, "Incorrect password", "Sever Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (response.get("message").toString().equals("NOT_FOUND")) {
+                JOptionPane.showMessageDialog(frame, "Incorrect username", "Sever Warning", JOptionPane.WARNING_MESSAGE);
                 return;
             }
             if (response.get("ErrorMessage") != null) {
