@@ -38,6 +38,8 @@ public class App implements ActionListener {
         frame.setLayout(new BorderLayout());
         frame.setLocationRelativeTo(null);
 
+        System.out.println(response.get("id").toString());
+
         try {
             user = getUserRequest("http://localhost:8080/api/v1/user", response.get("id").toString());
         } catch (IOException ex) {

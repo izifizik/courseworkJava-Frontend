@@ -20,7 +20,6 @@ public class Shop implements ActionListener {
     JLabel emptyLabel = new JLabel(); // kostil'
     Container container;
 
-    JButton setToBasketButton = new JButton("Send to basket");
     JButton backButton = new JButton("Back");
 
     JSONArray shop;
@@ -66,12 +65,9 @@ public class Shop implements ActionListener {
         container.add(shopTable.getTableHeader(), BorderLayout.PAGE_START);
         container.add(shopTable, BorderLayout.CENTER);
 
-        setToBasketButton.setBounds(575, 70, 150, 25);
-        setToBasketButton.addActionListener(this);
         backButton.setBounds(575, 30, 150, 25);
         backButton.addActionListener(this);
 
-        frame.add(setToBasketButton);
         frame.add(backButton);
 
         frame.add(emptyLabel);
